@@ -99,6 +99,7 @@ impl<T: ?Sized> RefCell<T> {
     ///
     /// Panics if the value is currently mutably borrowed.
     #[cfg_attr(debug_assertions, inline(never))]
+    #[track_caller]
     pub fn borrow<'a>(&'a self) -> Ref<'a, T> {
         match BorrowRef::new(&self.borrow) {
             Some(b) => Ref {
@@ -118,6 +119,7 @@ impl<T: ?Sized> RefCell<T> {
     ///
     /// Panics if the value is currently borrowed.
     #[cfg_attr(debug_assertions, inline(never))]
+    #[track_caller]
     pub fn borrow_mut<'a>(&'a self) -> RefMut<'a, T> {
         match BorrowRefMut::new(&self.borrow) {
             Some(b) => RefMut {
